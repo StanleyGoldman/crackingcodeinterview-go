@@ -33,8 +33,18 @@ func Test_oneAway(t *testing.T) {
 			want: false,
 		},
 		{
+			name: "Custom Test Case: Too Different",
+			args: args{x: "pale", y: "paleee"},
+			want: false,
+		},
+		{
 			name: "Custom Test Case 1",
-			args: args{x: "bakess", y: "bake"},
+			args: args{x: "pale", y: "bake"},
+			want: false,
+		},
+		{
+			name: "Custom Test Case 2",
+			args: args{x: "bbake", y: "bakee"},
 			want: false,
 		},
 	}

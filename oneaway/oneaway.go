@@ -1,25 +1,46 @@
 package oneaway
 
+import "math"
+
 func oneAway(x string, y string) bool {
-	results := make(map[rune]int)
+	xBig := len(x) > len(y)
+	yBig := len(y) > len(x)
+	same := len(x) == len(y)
 
-	for _, c := range x {
-		results[c]++
-	}
-
-	for _, c := range y {
-		results[c]--
-	}
-
-	left := 0
-	right := 0
-	for _, v := range results {
-		if v > 0 {
-			left += v
-		} else if v < 0 {
-			right += v
+	if !same {
+		if int(math.Abs(float64(len(x)-len(y)))) >= 2 {
+			return false
 		}
 	}
 
-	return (left <= 1) && (right <= 1)
+	p := int(math.Min(float64(len(x)), float64(len(y))))
+	xi := 0
+	yi := 0
+	diff := 0
+
+	for i := 0; i < p; i++ {
+		if xi > len(x) || yi > len(y) {
+			diff++
+		} else if x[xi] == y[yi] {
+			xi++
+			yi++
+		} else {
+			diff++
+
+			if same {
+				xi++
+				yi++
+			} else if xBig {
+				xi++
+			} else if yBig {
+				yi++
+			}
+		}
+
+		if diff > 1 {
+			return false
+		}
+	}
+
+	return true
 }
